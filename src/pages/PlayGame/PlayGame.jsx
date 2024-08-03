@@ -4,16 +4,20 @@ import LetterButtons from "../../components/LetterButtons/LetterButtons";
 import { useState } from "react";
 import HangMan from "../../components/HangMan/HangMan";
 
+
 function PlayGame() {
 
     const [usedLetters, setUsedLetters] = useState([]);
-    const [visible, setVisible] = useState("hidden")
+    const [visible, setVisible] = useState("hidden");
+    const [cardText,setCardText] = useState('')
     const [step, setStep] = useState(0);
 
     const location = useLocation(); 
     const wordSelected = location.state?.wordSelected; // If the state is not defined, it will return undefined, otherwise it will return the value of wordSelected
     const hint = location.state?.clue
     const navigate = useNavigate();
+
+    
 
     const handleLetterClick = function(letter) {
         if (wordSelected.toUpperCase().includes(letter)) {
@@ -24,9 +28,12 @@ function PlayGame() {
         }
         setUsedLetters([...usedLetters, letter]);
         if(step == 7){
-            setVisible("block")
+            setVisible("block");
+            setCardText("Game Over");
         }
     }
+   
+    console.log(wordSelected)
     
     return (
         <div className="w-full text-center">
@@ -49,7 +56,7 @@ function PlayGame() {
                 
             </div>
             <div className={`w-[600px] h-[200px] border-[2px] border-black ${visible} bg-white rounded-xl absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]`}>
-                <h2 className="text-[30px] mt-10"> Game Over </h2>
+                <h2 className="text-[30px] mt-10"> {cardText} </h2>
                 <button 
                  onClick={()=> navigate("/start")}
                  className="bg-green-500  hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl mt-5 border-[2px] border-green-700">Start Again</button>

@@ -9,6 +9,10 @@ function TextInputFormContainer({ onSubmit}) {
     function handleFormSubmit(event) {
         event.preventDefault();
         console.log('Form submitted', value);
+        if(value == ""){
+            alert('Please enter some text');
+            return;
+        }
         onSubmit?.(value); // if onSubmit is defined, call it with the value
     }
 
